@@ -8,7 +8,9 @@
 
 #import <UIKit/UIKit.h>
 
-@interface LightMenuBarAppDelegate : NSObject <UIApplicationDelegate> {
+#import "LightMenuBarDelegate.h"
+
+@interface LightMenuBarAppDelegate : NSObject <UIApplicationDelegate, LightMenuBarDelegate> {
     UIWindow *window;
 }
 

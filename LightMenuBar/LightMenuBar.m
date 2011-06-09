@@ -12,20 +12,29 @@
 @implementation LightMenuBar
 @synthesize delegate = _delegate;
 
+- (void)setup {
+    _selectedItemIndex = -1;
+}
+
+- (void)awakeFromNib {
+    [super awakeFromNib];
+    [self setup];
+}
+
 - (id)initWithFrame:(CGRect)frame {
     
     self = [super initWithFrame:frame];
     if (self) {
-        // Initialization code.
+        [self setup];
     }
     return self;
 }
 
 /**< hex Code in RGB */
 - (UIColor *)colorFromCode:(int)hexCode inAlpha:(float)alpha {
-    float red   = ((hexCode >> 16) & 0x000000FF)/255.0f
-    float green = ((hexCode >> 8) & 0x000000FF)/255.0f
-    float blue  = ((hexCode) & 0x000000FF)/255.0f
+    float red   = ((hexCode >> 16) & 0x000000FF)/255.0f;
+    float green = ((hexCode >> 8) & 0x000000FF)/255.0f;
+    float blue  = ((hexCode) & 0x000000FF)/255.0f;
     return [UIColor colorWithRed:red
                            green:green
                             blue:blue
@@ -41,7 +50,12 @@
     float maxY = CGRectGetMaxY(rect);
     float midY = CGRectGetMidY(rect);
     float minY = CGRectGetMinY(rect);
-    
+
+    CGContextMoveToPoint(context, minX, midY);
+    CGContextAddArcToPoint(context, minX, minY, midX, minY, cornerRadius);
+    CGContextAddArcToPoint(context, maxX, minY, maxX, midY, cornerRadius);
+    CGContextAddArcToPoint(context, maxX, maxY, midX, maxY, cornerRadius);
+    CGContextAddArcToPoint(context, minX, maxY, minX, midY, cornerRadius);
 }
 
 - (UIColor *)colorFromCode:(int)hexCode {
@@ -171,11 +185,26 @@
 
     CGContextRef context = UIGraphicsGetCurrentContext();
     
+    CGContextSetFillColorWithColor(context, [UIColor whiteColor].CGColor);
+    CGContextFillRect(context, rect);
+    
     /**< Background */
     CGRect bkgrdRect = CGRectMake(hPadding, vPadding, 
                                   rect.size.width - 2*hPadding, 
                                   rect.size.height - 2*vPadding);
+    [self addRoundCornerRect:bkgrdRect withCornerRadius:backgroundRad inContext:context];
+    CGContextSetFillColorWithColor(context, backgoundColor.CGColor);
+    CGContextFillPath(context);
     
+    /**< Seperator */
+    {
+        float currentX = backgroundRad;
+        for (int i = 0; i < (itemCount - 1); i++)
+        {
+            float itemWidth = [self.delegate itemWidthAtIndex:i inMenuBar:self];
+            currentX += itemWidth;
+        }
+    }
 }
 
 - (void)dealloc {

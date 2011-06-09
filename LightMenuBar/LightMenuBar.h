@@ -12,6 +12,7 @@
 
 @interface LightMenuBar : UIView {
     id<LightMenuBarDelegate> _delegate;
+    NSUInteger _selectedItemIndex;
 }
 
 @property (nonatomic, assign) id<LightMenuBarDelegate> delegate;
