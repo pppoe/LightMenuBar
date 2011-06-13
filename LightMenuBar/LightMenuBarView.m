@@ -296,7 +296,7 @@
 }
 
 - (CGFloat)barLength {
-    CGFloat width = self.frame.size.width;
+    CGFloat width = self.menuBar.frame.size.width;
     if (!autoWidth)
     {
         width = 0.0f;
@@ -304,8 +304,8 @@
         {
             width += [self.delegate itemWidthAtIndex:i inMenuBar:self.menuBar];
         }
+        width += 2*(hPadding + backgroundRad);
     }
-    width += 2*(hPadding + backgroundRad);
     return width;
 }
 

@@ -90,10 +90,6 @@
     return 6;
 }
 
-- (CGFloat)itemWidthAtIndex:(NSUInteger)index inMenuBar:(LightMenuBar *)menuBar {
-    return 60.0f;
-}
-
 - (NSString *)itemTitleAtIndex:(NSUInteger)index inMenuBar:(LightMenuBar *)menuBar {
     return [@"BN" stringByAppendingFormat:@"%d", index];
 }
@@ -102,7 +98,13 @@
     dispLabel.text = [NSString stringWithFormat:@"%d Selected", index];
 }
 
+//< Optional
+- (CGFloat)itemWidthAtIndex:(NSUInteger)index inMenuBar:(LightMenuBar *)menuBar {
+    return 60.0f;
+}
+
 #if USE_CUSTOM_DISPLAY 
+
 /****************************************************************************/
 //< For Background Area
 /****************************************************************************/
