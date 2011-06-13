@@ -1,1 +1,8 @@
-Drop-to-use Menu Bar is coming...
+This is Drop-in menu bar.
+
+There are only five files you need. 
+Download the tarball, drag the LightMenuBar folder into your project. 
+The LightMenuBar is subclass of UIView and I am sure you know how to deal with it. 
+Implement the three required methods in the LightMenuBarDelegate and you have this menu bar in your App!!
+
+Please refer to the Wiki for Sample Code.
