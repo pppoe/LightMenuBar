@@ -8,13 +8,25 @@
 
 #import <UIKit/UIKit.h>
 
+typedef enum {
+    LightMenuBarStyleItem,  /**< After tapping on an item, the item is highlighted */
+    LightMenuBarStyleButton /**< When tapping on an item, the item is highlighted, after tapping, the item state changed to normal */
+} LightMenuBarStyle;
+
+@class LightMenuBarView;
 @protocol LightMenuBarDelegate;
 
 @interface LightMenuBar : UIView {
-    id<LightMenuBarDelegate> _delegate;
-    NSUInteger _selectedItemIndex;
+    LightMenuBarView *_menuBarView;
+    UIScrollView *_scrollView;
+    LightMenuBarStyle _style;
 }
 
+@property (nonatomic, assign) NSUInteger selectedItemIndex;
 @property (nonatomic, assign) id<LightMenuBarDelegate> delegate;
+@property (nonatomic, readonly) LightMenuBarView *menuBarView;
+@property (nonatomic, readonly) LightMenuBarStyle barStyle;
+
+- (id)initWithFrame:(CGRect)frame andStyle:(LightMenuBarStyle)barStyle;
 
 @end

@@ -7,13 +7,43 @@
 //
 
 #import "LightMenuBar.h"
-#import "LightMenuBarDelegate.h"
+#import "LightMenuBarView.h"
 
 @implementation LightMenuBar
-@synthesize delegate = _delegate;
+@synthesize menuBarView = _menuBarView;
+@synthesize barStyle = _style;
+@dynamic delegate;
+@dynamic selectedItemIndex;
+
+#pragma mark property
+- (NSUInteger)selectedItemIndex {
+    return _menuBarView.selectedItemIndex;
+}
+
+- (void)setSelectedItemIndex:(NSUInteger)itemIndex {
+    _menuBarView.selectedItemIndex = itemIndex;
+}
+
+- (id<LightMenuBarDelegate>)delegate {
+    return _menuBarView.delegate;
+}
+
+- (void)setDelegate:(id <LightMenuBarDelegate>)theDelegate {
+    _menuBarView.delegate = theDelegate;
+}
 
 - (void)setup {
-    _selectedItemIndex = -1;
+    _scrollView = [[UIScrollView alloc] initWithFrame:self.bounds];
+    _menuBarView = [[LightMenuBarView alloc] initWithFrame:self.bounds];
+    _menuBarView.menuBar = self;
+    
+    _scrollView.showsVerticalScrollIndicator = NO;
+    _scrollView.showsHorizontalScrollIndicator = NO;
+    _scrollView.bounces = NO;
+    _scrollView.contentSize = self.frame.size;
+    
+    [self addSubview:_scrollView];
+    [_scrollView addSubview:_menuBarView];
 }
 
 - (void)awakeFromNib {
@@ -22,194 +52,25 @@
 }
 
 - (id)initWithFrame:(CGRect)frame {
-    
-    self = [super initWithFrame:frame];
-    if (self) {
+    return [self initWithFrame:frame andStyle:LightMenuBarStyleItem];
+}
+
+- (id)initWithFrame:(CGRect)frame andStyle:(LightMenuBarStyle)barStyle {
+    if (self = [super initWithFrame:frame])
+    {
+        _style = barStyle;
         [self setup];
     }
     return self;
 }
 
-/**< hex Code in RGB */
-- (UIColor *)colorFromCode:(int)hexCode inAlpha:(float)alpha {
-    float red   = ((hexCode >> 16) & 0x000000FF)/255.0f;
-    float green = ((hexCode >> 8) & 0x000000FF)/255.0f;
-    float blue  = ((hexCode) & 0x000000FF)/255.0f;
-    return [UIColor colorWithRed:red
-                           green:green
-                            blue:blue
-                           alpha:alpha];
+- (void)layoutSubviews {
+    CGFloat barLength = [self.menuBarView barLength];
+    _menuBarView.frame = CGRectMake(_menuBarView.frame.origin.x, _menuBarView.frame.origin.y, 
+                                    barLength, _menuBarView.frame.size.height);
+    _scrollView.contentSize = CGSizeMake(barLength, _scrollView.frame.size.height);
+    [_menuBarView setNeedsDisplay];
+    
 }
-
-- (void)addRoundCornerRect:(CGRect)rect withCornerRadius:(CGFloat)cornerRadius inContext:(CGContextRef)context {
-    
-    float maxX = CGRectGetMaxX(rect);
-    float midX = CGRectGetMidX(rect);
-    float minX = CGRectGetMinX(rect);
-
-    float maxY = CGRectGetMaxY(rect);
-    float midY = CGRectGetMidY(rect);
-    float minY = CGRectGetMinY(rect);
-
-    CGContextMoveToPoint(context, minX, midY);
-    CGContextAddArcToPoint(context, minX, minY, midX, minY, cornerRadius);
-    CGContextAddArcToPoint(context, maxX, minY, maxX, midY, cornerRadius);
-    CGContextAddArcToPoint(context, maxX, maxY, midX, maxY, cornerRadius);
-    CGContextAddArcToPoint(context, minX, maxY, minX, midY, cornerRadius);
-}
-
-- (UIColor *)colorFromCode:(int)hexCode {
-    return [self colorFromCode:hexCode inAlpha:1.0f];
-}
-
-- (void)drawRect:(CGRect)rect {
-
-    /****************************************************************************/
-    //< Parameters
-    /****************************************************************************/
-
-    NSUInteger itemCount = [self.delegate itemCountInMenuBar:self];
-    
-    CGFloat vPadding = 5.0f;
-    CGFloat hPadding = 5.0f;
-    CGFloat backgroundRad = 5.0f;
-    CGFloat buttonRad = 5.0f;
-    CGFloat sepWidth = 1.0f;
-    CGFloat sepHeightRate = 0.7f;
-    
-    UIColor *backgoundColor = [self colorFromCode:0x121212];
-    UIColor *buttonHighlightColor = [self colorFromCode:0x212121];
-    UIColor *titleHighlightColor = [self colorFromCode:0x121212];
-    UIColor *titleNormalColor = [self colorFromCode:0x212121];
-    UIColor *sepColor = [UIColor whiteColor];
-    
-    UIFont *titleFont = [UIFont systemFontOfSize:14.0f];
-    
-    LightMenuBarAnimation animation = LightMenuBarAnimationSlide;
-    
-    //< TODO, ugly code, any better solution here ?
-    
-    /****************************************************************************/
-    //< For Background Area
-    /****************************************************************************/
-
-    /**< Top and Bottom Padding, by Default 5.0f */
-    if ([(id)self.delegate respondsToSelector:@selector(verticalPaddingInMenuBar:)])
-    {
-        vPadding = [self.delegate verticalPaddingInMenuBar:self];
-    }
-    
-    /**< Left and Right Padding, by Default 5.0f */
-    if ([(id)self.delegate respondsToSelector:@selector(horizontalPaddingInMenuBar:)])
-    {
-        hPadding = [self.delegate horizontalPaddingInMenuBar:self];
-    }
-    
-    /**< Corner Radius of the background Area, by Default 5.0f */
-    if ([(id)self.delegate respondsToSelector:@selector(cornerRadiusOfBackgroundInMenuBar:)])
-    {
-        backgroundRad = [self.delegate cornerRadiusOfBackgroundInMenuBar:self];
-    }
-    
-    /**< Color of Background, by Default RGB Code 0x121212 */
-    if ([(id)self.delegate respondsToSelector:@selector(colorOfBackgroundInMenuBar:)])
-    {
-        backgoundColor = [self.delegate colorOfBackgroundInMenuBar:self];
-    }
-    
-    /****************************************************************************/
-    //< For Button 
-    /****************************************************************************/
-
-    /**< Corner Radius of the Button highlight Area, by Default 5.0f */
-    if ([(id)self.delegate respondsToSelector:@selector(cornerRadiusOfButtonInMenuBar:)])
-    {
-        buttonRad = [self.delegate cornerRadiusOfButtonInMenuBar:self];
-    }
-    
-    /**< Color of Button in Highlight State, by Default RGB Code 0x212121 */
-    if ([(id)self.delegate respondsToSelector:@selector(colorOfButtonHighlightInMenuBar:)])
-    {
-        buttonHighlightColor = [self.delegate colorOfButtonHighlightInMenuBar:self];
-    }
-    
-    /**< Color of Button Title in Highlight State, by Default RGB Code 0x121212 */
-    if ([(id)self.delegate respondsToSelector:@selector(colorOfTitleHighlightInMenuBar:)])
-    {
-        titleHighlightColor = [self.delegate colorOfTitleHighlightInMenuBar:self];
-    }
-    
-    /**< Color of Button Title in Normal State, by Default RGB Code 0x212121 */
-    if ([(id)self.delegate respondsToSelector:@selector(colorOfTitleNormalInMenuBar:)])
-    {
-        titleNormalColor = [self.delegate colorOfTitleNormalInMenuBar:self];
-    }
-    
-    /**< Font for Button Title, by Default [UIFont systemFontOfSize:14.0f] */
-    if ([(id)self.delegate respondsToSelector:@selector(fontOfTitleInMenuBar:)])
-    {
-        titleFont = [self.delegate fontOfTitleInMenuBar:self];
-    }    
-    
-    /****************************************************************************/
-    //< For Seperator 
-    /****************************************************************************/
-
-    /**< Width of Seperator, by Default 1.0f */
-    if ([(id)self.delegate respondsToSelector:@selector(seperatorWidthInMenuBar:)])
-    {
-        sepWidth = [self.delegate seperatorWidthInMenuBar:self];
-    }
-    
-    /**< Height Rate of Seperator, by Default 0.7f */
-    if ([(id)self.delegate respondsToSelector:@selector(seperatorHeightRateInMenuBar:)])
-    {
-        sepHeightRate = [self.delegate seperatorHeightRateInMenuBar:self];
-    }
-    
-    /**< Color of Seperator, by Default White */
-    if ([(id)self.delegate respondsToSelector:@selector(seperatorColorInMenuBar:)])
-    {
-        sepColor = [self.delegate seperatorColorInMenuBar:self];
-    }
-    
-    /****************************************************************************/
-    //< Animation Type
-    /****************************************************************************/
-    
-    /**< Animation Type when an item Button is tapped, by Default LightMenuBarAnimationSlide */
-    if ([(id)self.delegate respondsToSelector:@selector(animationForMenuBar:)])
-    {
-        animation = [self.delegate animationForMenuBar:self];
-    }
-
-    CGContextRef context = UIGraphicsGetCurrentContext();
-    
-    CGContextSetFillColorWithColor(context, [UIColor whiteColor].CGColor);
-    CGContextFillRect(context, rect);
-    
-    /**< Background */
-    CGRect bkgrdRect = CGRectMake(hPadding, vPadding, 
-                                  rect.size.width - 2*hPadding, 
-                                  rect.size.height - 2*vPadding);
-    [self addRoundCornerRect:bkgrdRect withCornerRadius:backgroundRad inContext:context];
-    CGContextSetFillColorWithColor(context, backgoundColor.CGColor);
-    CGContextFillPath(context);
-    
-    /**< Seperator */
-    {
-        float currentX = backgroundRad;
-        for (int i = 0; i < (itemCount - 1); i++)
-        {
-            float itemWidth = [self.delegate itemWidthAtIndex:i inMenuBar:self];
-            currentX += itemWidth;
-        }
-    }
-}
-
-- (void)dealloc {
-    [super dealloc];
-}
-
 
 @end

@@ -12,6 +12,7 @@
 
 @interface LightMenuBarAppDelegate : NSObject <UIApplicationDelegate, LightMenuBarDelegate> {
     UIWindow *window;
+    IBOutlet UILabel *dispLabel;
 }
 
 @property (nonatomic, retain) IBOutlet UIWindow *window;

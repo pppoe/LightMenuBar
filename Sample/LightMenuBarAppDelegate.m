@@ -9,18 +9,20 @@
 #import "LightMenuBarAppDelegate.h"
 #import "LightMenuBar.h"
 
+//< Set this to 1 to use customized display
+#define USE_CUSTOM_DISPLAY 0
+
 @implementation LightMenuBarAppDelegate
 
 @synthesize window;
-
 
 #pragma mark -
 #pragma mark Application lifecycle
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {    
     
-    // Override point for customization after application launch.
-    LightMenuBar *menuBar = [[LightMenuBar alloc] initWithFrame:CGRectMake(0, 20, 320, 40)];
+    LightMenuBar *menuBar = [[LightMenuBar alloc] initWithFrame:CGRectMake(0, 20, 320, 40) andStyle:LightMenuBarStyleItem];
+//    LightMenuBar *menuBar = [[LightMenuBar alloc] initWithFrame:CGRectMake(0, 20, 320, 40) andStyle:LightMenuBarStyleButton];
     menuBar.delegate = self;
     [self.window addSubview:menuBar];
     [self.window makeKeyAndVisible];
@@ -89,76 +91,87 @@
 }
 
 - (CGFloat)itemWidthAtIndex:(NSUInteger)index inMenuBar:(LightMenuBar *)menuBar {
-    return 50.0f;
+    return 60.0f;
 }
 
 - (NSString *)itemTitleAtIndex:(NSUInteger)index inMenuBar:(LightMenuBar *)menuBar {
-    return @"Name";
+    return [@"BN" stringByAppendingFormat:@"%d", index];
 }
 
 - (void)itemSelectedAtIndex:(NSUInteger)index inMenuBar:(LightMenuBar *)menuBar {
+    dispLabel.text = [NSString stringWithFormat:@"%d Selected", index];
 }
 
-///****************************************************************************/
-////< For Background Area
-///****************************************************************************/
-//
-///**< Top and Bottom Padding, by Default 5.0f */
-//- (CGFloat)verticalPaddingInMenuBar:(LightMenuBar *)menuBar {
-//}
-//
-///**< Left and Right Padding, by Default 5.0f */
-//- (CGFloat)horizontalPaddingInMenuBar:(LightMenuBar *)menuBar {
-//}
-//
-///**< Corner Radius of the background Area, by Default 5.0f */
-//- (CGFloat)cornerRadiusOfBackgroundInMenuBar:(LightMenuBar *)menuBar {
-//}
-//
-///**< Color of Background, by Default RGB Code 0x121212 */
-//- (UIColor *)colorOfBackgroundInMenuBar:(LightMenuBar *)menuBar {
-//}
-//
-///****************************************************************************/
-////< For Button 
-///****************************************************************************/
-//
-///**< Corner Radius of the Button highlight Area, by Default 5.0f */
-//- (CGFloat)cornerRadiusOfButtonInMenuBar:(LightMenuBar *)menuBar {
-//}
-//
-///**< Color of Button in Highlight State, by Default RGB Code 0x212121 */
-//- (UIColor *)colorOfButtonHighlightInMenuBar:(LightMenuBar *)menuBar {
-//}
-//
-///**< Color of Button Title in Normal State, by Default RGB Code 0x212121 */
-//- (UIColor *)colorOfTitleNormalInMenuBar:(LightMenuBar *)menuBar {
-//}
-//
-///**< Color of Button Title in Highlight State, by Default RGB Code 0x121212 */
-//- (UIColor *)colorOfTitleHighlightInMenuBar:(LightMenuBar *)menuBar {
-//}
-//
-///**< Font for Button Title, by Default [UIFont systemFontOfSize:14.0f] */
-//- (UIFont *)fontOfTitleInMenuBar:(LightMenuBar *)menuBar {
-//}
-//
-///****************************************************************************/
-////< For Seperator 
-///****************************************************************************/
-//
+#if USE_CUSTOM_DISPLAY 
+/****************************************************************************/
+//< For Background Area
+/****************************************************************************/
+
+/**< Top and Bottom Padding, by Default 5.0f */
+- (CGFloat)verticalPaddingInMenuBar:(LightMenuBar *)menuBar {
+    return 0.0f;
+}
+
+/**< Left and Right Padding, by Default 5.0f */
+- (CGFloat)horizontalPaddingInMenuBar:(LightMenuBar *)menuBar {
+    return 0.0f;
+}
+
+/**< Corner Radius of the background Area, by Default 5.0f */
+- (CGFloat)cornerRadiusOfBackgroundInMenuBar:(LightMenuBar *)menuBar {
+    return 0.0f;
+}
+
+- (UIColor *)colorOfBackgroundInMenuBar:(LightMenuBar *)menuBar {
+    return [UIColor blackColor];
+}
+
+/****************************************************************************/
+//< For Button 
+/****************************************************************************/
+
+/**< Corner Radius of the Button highlight Area, by Default 5.0f */
+- (CGFloat)cornerRadiusOfButtonInMenuBar:(LightMenuBar *)menuBar {
+    return 1.0f;
+}
+
+- (UIColor *)colorOfButtonHighlightInMenuBar:(LightMenuBar *)menuBar {
+    return [UIColor whiteColor];
+
+}
+
+- (UIColor *)colorOfTitleNormalInMenuBar:(LightMenuBar *)menuBar {
+    return [UIColor whiteColor];
+}
+
+- (UIColor *)colorOfTitleHighlightInMenuBar:(LightMenuBar *)menuBar {
+    return [UIColor blackColor];
+}
+
+- (UIFont *)fontOfTitleInMenuBar:(LightMenuBar *)menuBar {
+    return [UIFont systemFontOfSize:15.0f];
+}
+
+/****************************************************************************/
+//< For Seperator 
+/****************************************************************************/
+
 ///**< Color of Seperator, by Default White */
 //- (UIColor *)seperatorColorInMenuBar:(LightMenuBar *)menuBar {
 //}
-//
-///**< Width of Seperator, by Default 1.0f */
-//- (CGFloat)seperatorWidthInMenuBar:(LightMenuBar *)menuBar {
-//}
-//
-///**< Height Rate of Seperator, by Default 0.7f */
-//- (CGFloat)seperatorHeightRateInMenuBar:(LightMenuBar *)menuBar {
-//}
-//
+
+/**< Width of Seperator, by Default 1.0f */
+- (CGFloat)seperatorWidthInMenuBar:(LightMenuBar *)menuBar {
+    return 0.0f;
+}
+
+/**< Height Rate of Seperator, by Default 0.7f */
+- (CGFloat)seperatorHeightRateInMenuBar:(LightMenuBar *)menuBar {
+    return 0.0f;
+}
+
+#endif
+
 //
 ///****************************************************************************/
 ////< Animation Type

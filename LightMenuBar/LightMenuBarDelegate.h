@@ -8,12 +8,13 @@
 
 #import <UIKit/UIKit.h>
 
-typedef enum {
-    LightMenuBarAnimationNone,
-    LightMenuBarAnimationSlide,
-    LightMenuBarAnimationBounce,
-    LightMenuBarAnimationUnderline
-} LightMenuBarAnimation;
+//typedef enum {
+//    LightMenuBarAnimationNone,
+//    LightMenuBarAnimationFade,
+//    LightMenuBarAnimationSlide,
+//    LightMenuBarAnimationBounce,
+//    LightMenuBarAnimationUnderline
+//} LightMenuBarAnimation;
 
 @class LightMenuBar;
 
@@ -22,11 +23,16 @@ typedef enum {
 @required
 
 - (NSUInteger)itemCountInMenuBar:(LightMenuBar *)menuBar;
-- (CGFloat)itemWidthAtIndex:(NSUInteger)index inMenuBar:(LightMenuBar *)menuBar;
 - (NSString *)itemTitleAtIndex:(NSUInteger)index inMenuBar:(LightMenuBar *)menuBar;
 - (void)itemSelectedAtIndex:(NSUInteger)index inMenuBar:(LightMenuBar *)menuBar;
 
 @optional
+
+/**< Whether an Item is selectable, by Default return YES */
+- (BOOL)itemSelectableAtIndex:(NSUInteger)index inMenuBar:(LightMenuBar *)menuBar;
+
+/**< Customize the Width of Each Item, by Default each item is of the same width */
+- (CGFloat)itemWidthAtIndex:(NSUInteger)index inMenuBar:(LightMenuBar *)menuBar;
 
 /****************************************************************************/
 //< For Background Area
@@ -41,7 +47,7 @@ typedef enum {
 /**< Corner Radius of the background Area, by Default 5.0f */
 - (CGFloat)cornerRadiusOfBackgroundInMenuBar:(LightMenuBar *)menuBar;
 
-/**< Color of Background, by Default RGB Code 0x121212 */
+/**< Color of Background, by Default RGB Code 0xe9f4e9 */
 - (UIColor *)colorOfBackgroundInMenuBar:(LightMenuBar *)menuBar;
 
 /****************************************************************************/
@@ -51,16 +57,16 @@ typedef enum {
 /**< Corner Radius of the Button highlight Area, by Default 5.0f */
 - (CGFloat)cornerRadiusOfButtonInMenuBar:(LightMenuBar *)menuBar;
 
-/**< Color of Button in Highlight State, by Default RGB Code 0x212121 */
+/**< Color of Button in Highlight State, by Default RGB Code 0x4d9c5d */
 - (UIColor *)colorOfButtonHighlightInMenuBar:(LightMenuBar *)menuBar;
 
-/**< Color of Button Title in Normal State, by Default RGB Code 0x212121 */
+/**< Color of Button Title in Normal State, by Default RGB Code 0x4d9c5d */
 - (UIColor *)colorOfTitleNormalInMenuBar:(LightMenuBar *)menuBar;
 
-/**< Color of Button Title in Highlight State, by Default RGB Code 0x121212 */
+/**< Color of Button Title in Highlight State, by Default RGB Code 0xe9f4e9 */
 - (UIColor *)colorOfTitleHighlightInMenuBar:(LightMenuBar *)menuBar;
 
-/**< Font for Button Title, by Default [UIFont systemFontOfSize:14.0f] */
+/**< Font for Button Title, by Default [UIFont systemFontOfSize:12.0f] */
 - (UIFont *)fontOfTitleInMenuBar:(LightMenuBar *)menuBar;
 
 /****************************************************************************/
@@ -77,11 +83,11 @@ typedef enum {
 - (CGFloat)seperatorHeightRateInMenuBar:(LightMenuBar *)menuBar;
 
 
-/****************************************************************************/
-//< Animation Type
-/****************************************************************************/
-
-/**< Animation Type when an item Button is tapped, by Default LightMenuBarAnimationSlide */
-- (LightMenuBarAnimation)animationForMenuBar:(LightMenuBar *)menuBar;
+///****************************************************************************/
+////< Animation Type
+///****************************************************************************/
+//
+///**< Animation Type when an item Button is tapped, by Default LightMenuBarAnimationSlide */
+//- (LightMenuBarAnimation)animationForMenuBar:(LightMenuBar *)menuBar;
 
 @end
