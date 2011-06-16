@@ -8,14 +8,15 @@
 
 #import <UIKit/UIKit.h>
 
-#import "LightMenuBarDelegate.h"
-
-@interface LightMenuBarAppDelegate : NSObject <UIApplicationDelegate, LightMenuBarDelegate> {
+@interface LightMenuBarAppDelegate : NSObject <UIApplicationDelegate> {
     UIWindow *window;
-    IBOutlet UILabel *dispLabel;
+    UINavigationController *navController;
 }
 
 @property (nonatomic, retain) IBOutlet UIWindow *window;
+
+- (IBAction)demoMenuBarTapped:(id)sender;
+- (IBAction)demoMenuNavigationBarTapped:(id)sender;
 
 @end
 

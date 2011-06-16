@@ -7,26 +7,47 @@
 //
 
 #import "LightMenuBarAppDelegate.h"
-#import "LightMenuBar.h"
-
-//< Set this to 1 to use customized display
-#define USE_CUSTOM_DISPLAY 0
+#import "DemoMenuBar.h"
+#import "DemoMenuNavigationBar.h"
 
 @implementation LightMenuBarAppDelegate
 
 @synthesize window;
 
+- (IBAction)demoMenuBarTapped:(id)sender {
+    
+    if (!navController)
+    {
+        navController = [[UINavigationController alloc] init];
+        [navController setNavigationBarHidden:YES];
+        [self.window addSubview:navController.view];        
+    }
+    
+    DemoMenuBar *menuBar = [[DemoMenuBar alloc] init];
+    [navController pushViewController:menuBar animated:YES];
+    [menuBar release];
+}
+
+- (IBAction)demoMenuNavigationBarTapped:(id)sender {    
+
+    if (!navController)
+    {
+        navController = [[UINavigationController alloc] init];
+        [navController setNavigationBarHidden:YES];
+        [self.window addSubview:navController.view];        
+    }
+
+    DemoMenuNavigationBar *menuNavBar = [[DemoMenuNavigationBar alloc] init];
+    [navController pushViewController:menuNavBar animated:YES];
+    [menuNavBar release];
+}
+
 #pragma mark -
 #pragma mark Application lifecycle
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {    
-    
-    LightMenuBar *menuBar = [[LightMenuBar alloc] initWithFrame:CGRectMake(0, 20, 320, 40) andStyle:LightMenuBarStyleItem];
-//    LightMenuBar *menuBar = [[LightMenuBar alloc] initWithFrame:CGRectMake(0, 20, 320, 40) andStyle:LightMenuBarStyleButton];
-    menuBar.delegate = self;
-    [self.window addSubview:menuBar];
+
     [self.window makeKeyAndVisible];
-    [menuBar release];
     
     return YES;
 }
@@ -80,106 +101,9 @@
 }
 
 - (void)dealloc {
+    [navController release];
     [window release];
     [super dealloc];
 }
-
-#pragma mark LightMenuBarDelegate
-- (NSUInteger)itemCountInMenuBar:(LightMenuBar *)menuBar {
-    return 6;
-}
-
-- (NSString *)itemTitleAtIndex:(NSUInteger)index inMenuBar:(LightMenuBar *)menuBar {
-    return [@"BN" stringByAppendingFormat:@"%d", index];
-}
-
-- (void)itemSelectedAtIndex:(NSUInteger)index inMenuBar:(LightMenuBar *)menuBar {
-    dispLabel.text = [NSString stringWithFormat:@"%d Selected", index];
-}
-
-//< Optional
-- (CGFloat)itemWidthAtIndex:(NSUInteger)index inMenuBar:(LightMenuBar *)menuBar {
-    return 60.0f;
-}
-
-#if USE_CUSTOM_DISPLAY 
-
-/****************************************************************************/
-//< For Background Area
-/****************************************************************************/
-
-/**< Top and Bottom Padding, by Default 5.0f */
-- (CGFloat)verticalPaddingInMenuBar:(LightMenuBar *)menuBar {
-    return 0.0f;
-}
-
-/**< Left and Right Padding, by Default 5.0f */
-- (CGFloat)horizontalPaddingInMenuBar:(LightMenuBar *)menuBar {
-    return 0.0f;
-}
-
-/**< Corner Radius of the background Area, by Default 5.0f */
-- (CGFloat)cornerRadiusOfBackgroundInMenuBar:(LightMenuBar *)menuBar {
-    return 0.0f;
-}
-
-- (UIColor *)colorOfBackgroundInMenuBar:(LightMenuBar *)menuBar {
-    return [UIColor blackColor];
-}
-
-/****************************************************************************/
-//< For Button 
-/****************************************************************************/
-
-/**< Corner Radius of the Button highlight Area, by Default 5.0f */
-- (CGFloat)cornerRadiusOfButtonInMenuBar:(LightMenuBar *)menuBar {
-    return 1.0f;
-}
-
-- (UIColor *)colorOfButtonHighlightInMenuBar:(LightMenuBar *)menuBar {
-    return [UIColor whiteColor];
-
-}
-
-- (UIColor *)colorOfTitleNormalInMenuBar:(LightMenuBar *)menuBar {
-    return [UIColor whiteColor];
-}
-
-- (UIColor *)colorOfTitleHighlightInMenuBar:(LightMenuBar *)menuBar {
-    return [UIColor blackColor];
-}
-
-- (UIFont *)fontOfTitleInMenuBar:(LightMenuBar *)menuBar {
-    return [UIFont systemFontOfSize:15.0f];
-}
-
-/****************************************************************************/
-//< For Seperator 
-/****************************************************************************/
-
-///**< Color of Seperator, by Default White */
-//- (UIColor *)seperatorColorInMenuBar:(LightMenuBar *)menuBar {
-//}
-
-/**< Width of Seperator, by Default 1.0f */
-- (CGFloat)seperatorWidthInMenuBar:(LightMenuBar *)menuBar {
-    return 0.0f;
-}
-
-/**< Height Rate of Seperator, by Default 0.7f */
-- (CGFloat)seperatorHeightRateInMenuBar:(LightMenuBar *)menuBar {
-    return 0.0f;
-}
-
-#endif
-
-//
-///****************************************************************************/
-////< Animation Type
-///****************************************************************************/
-//
-///**< Animation Type when an item Button is tapped, by Default LightMenuBarAnimationSlide */
-//- (LightMenuBarAnimation)animationForMenuBar:(LightMenuBar *)menuBar {
-//}
 
 @end

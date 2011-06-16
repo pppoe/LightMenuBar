@@ -16,6 +16,10 @@
 		469487C413A0A6A5002836C8 /* LightMenuBarAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 469487C313A0A6A5002836C8 /* LightMenuBarAppDelegate.m */; };
 		469487C713A0A6B4002836C8 /* LightMenuBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 469487C613A0A6B4002836C8 /* LightMenuBar.m */; };
 		46A54A8F13A1AA9100421A55 /* LightMenuBarView.m in Sources */ = {isa = PBXBuildFile; fileRef = 46A54A8E13A1AA9100421A55 /* LightMenuBarView.m */; };
+		46EF90DA13A9CF120042B04C /* DemoMenuBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 46EF90D813A9CF120042B04C /* DemoMenuBar.m */; };
+		46EF90DB13A9CF120042B04C /* DemoMenBar.xib in Resources */ = {isa = PBXBuildFile; fileRef = 46EF90D913A9CF120042B04C /* DemoMenBar.xib */; };
+		46EF912213A9D0ED0042B04C /* DemoMenuNavigationBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 46EF912013A9D0ED0042B04C /* DemoMenuNavigationBar.m */; };
+		46EF912313A9D0ED0042B04C /* DemoMenuNavigationBar.xib in Resources */ = {isa = PBXBuildFile; fileRef = 46EF912113A9D0ED0042B04C /* DemoMenuNavigationBar.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -34,6 +38,12 @@
 		469487C813A0A6C1002836C8 /* LightMenuBarDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LightMenuBarDelegate.h; sourceTree = "<group>"; };
 		46A54A8D13A1AA9100421A55 /* LightMenuBarView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LightMenuBarView.h; sourceTree = "<group>"; };
 		46A54A8E13A1AA9100421A55 /* LightMenuBarView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LightMenuBarView.m; sourceTree = "<group>"; };
+		46EF90D713A9CF120042B04C /* DemoMenuBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DemoMenuBar.h; sourceTree = "<group>"; };
+		46EF90D813A9CF120042B04C /* DemoMenuBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DemoMenuBar.m; sourceTree = "<group>"; };
+		46EF90D913A9CF120042B04C /* DemoMenBar.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DemoMenBar.xib; sourceTree = "<group>"; };
+		46EF911F13A9D0ED0042B04C /* DemoMenuNavigationBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DemoMenuNavigationBar.h; sourceTree = "<group>"; };
+		46EF912013A9D0ED0042B04C /* DemoMenuNavigationBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DemoMenuNavigationBar.m; sourceTree = "<group>"; };
+		46EF912113A9D0ED0042B04C /* DemoMenuNavigationBar.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DemoMenuNavigationBar.xib; sourceTree = "<group>"; };
 		8D1107310486CEB800E47090 /* LightMenuBar-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "LightMenuBar-Info.plist"; plistStructureDefinitionIdentifier = "com.apple.xcode.plist.structure-definition.iphone.info-plist"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -119,6 +129,12 @@
 			children = (
 				469487C213A0A6A5002836C8 /* LightMenuBarAppDelegate.h */,
 				469487C313A0A6A5002836C8 /* LightMenuBarAppDelegate.m */,
+				46EF90D713A9CF120042B04C /* DemoMenuBar.h */,
+				46EF90D813A9CF120042B04C /* DemoMenuBar.m */,
+				46EF90D913A9CF120042B04C /* DemoMenBar.xib */,
+				46EF911F13A9D0ED0042B04C /* DemoMenuNavigationBar.h */,
+				46EF912013A9D0ED0042B04C /* DemoMenuNavigationBar.m */,
+				46EF912113A9D0ED0042B04C /* DemoMenuNavigationBar.xib */,
 			);
 			path = Sample;
 			sourceTree = "<group>";
@@ -173,6 +189,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				28AD733F0D9D9553002E5188 /* MainWindow.xib in Resources */,
+				46EF90DB13A9CF120042B04C /* DemoMenBar.xib in Resources */,
+				46EF912313A9D0ED0042B04C /* DemoMenuNavigationBar.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -187,6 +205,8 @@
 				469487C413A0A6A5002836C8 /* LightMenuBarAppDelegate.m in Sources */,
 				469487C713A0A6B4002836C8 /* LightMenuBar.m in Sources */,
 				46A54A8F13A1AA9100421A55 /* LightMenuBarView.m in Sources */,
+				46EF90DA13A9CF120042B04C /* DemoMenuBar.m in Sources */,
+				46EF912213A9D0ED0042B04C /* DemoMenuNavigationBar.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
