@@ -9,3 +9,6 @@ Please refer to the [Wiki](https://github.com/pppoe/LightMenuBar/wiki) for Sampl
 # License
 
 LightMenuBar is released under the MIT license.
+
+# Credits
+The Default color and Shape is design by 猫小七
