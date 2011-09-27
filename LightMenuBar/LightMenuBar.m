@@ -37,6 +37,10 @@
     if (desiredX > _menuBarView.barLength - _scrollView.bounds.size.width)
         desiredX = _menuBarView.barLength - _scrollView.bounds.size.width;
     
+    
+    if (_scrollView.bounds.size.width > _menuBarView.barLength)
+        desiredX = ((_scrollView.bounds.size.width - _menuBarView.barLength) / -2);
+    
     [_scrollView setContentOffset:CGPointMake(desiredX, 0) animated:animated];
     
     if (_menuBarView.delegate && notifyDelegate)
