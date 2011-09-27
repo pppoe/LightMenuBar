@@ -24,6 +24,9 @@
     LightMenuBar *menuBar = [[LightMenuBar alloc] initWithFrame:CGRectMake(0, 20, 320, 40) andStyle:LightMenuBarStyleItem];
 //    LightMenuBar *menuBar = [[LightMenuBar alloc] initWithFrame:CGRectMake(0, 20, 320, 40) andStyle:LightMenuBarStyleButton];
     menuBar.delegate = self;
+    
+    menuBar.bounces = YES;
+    
     [self.window addSubview:menuBar];
     [self.window makeKeyAndVisible];
     [menuBar release];

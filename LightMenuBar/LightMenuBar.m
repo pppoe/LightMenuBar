@@ -14,6 +14,7 @@
 @synthesize barStyle = _style;
 @dynamic delegate;
 @dynamic selectedItemIndex;
+@dynamic bounces;
 
 #pragma mark property
 - (NSUInteger)selectedItemIndex {
@@ -22,6 +23,14 @@
 
 - (void)setSelectedItemIndex:(NSUInteger)itemIndex {
     _menuBarView.selectedItemIndex = itemIndex;
+}
+
+- (BOOL)bounces {
+    return _scrollView.bounces;
+}
+
+- (void)setBounces:(BOOL)bounces {
+    _scrollView.bounces = bounces;
 }
 
 - (id<LightMenuBarDelegate>)delegate {
