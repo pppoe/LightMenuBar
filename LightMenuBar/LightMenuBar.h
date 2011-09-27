@@ -32,4 +32,6 @@ typedef enum {
 
 - (id)initWithFrame:(CGRect)frame andStyle:(LightMenuBarStyle)barStyle;
 
+- (void)setSelectedItemIndex:(NSUInteger)itemIndex animated:(BOOL)animated notifyDelegate:(BOOL)notifyDelegate;
+
 @end

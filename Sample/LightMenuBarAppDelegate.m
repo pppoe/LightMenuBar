@@ -26,6 +26,7 @@
     menuBar.delegate = self;
     
     menuBar.bounces = YES;
+    menuBar.selectedItemIndex = 19;
     
     [self.window addSubview:menuBar];
     [self.window makeKeyAndVisible];
@@ -89,7 +90,7 @@
 
 #pragma mark LightMenuBarDelegate
 - (NSUInteger)itemCountInMenuBar:(LightMenuBar *)menuBar {
-    return 6;
+    return 20;
 }
 
 - (NSString *)itemTitleAtIndex:(NSUInteger)index inMenuBar:(LightMenuBar *)menuBar {

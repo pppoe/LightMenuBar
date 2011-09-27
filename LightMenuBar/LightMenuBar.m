@@ -8,6 +8,7 @@
 
 #import "LightMenuBar.h"
 #import "LightMenuBarView.h"
+#import "LightMenuBarDelegate.h"
 
 @implementation LightMenuBar
 @synthesize menuBarView = _menuBarView;
@@ -21,8 +22,25 @@
     return _menuBarView.selectedItemIndex;
 }
 
-- (void)setSelectedItemIndex:(NSUInteger)itemIndex {
+- (void)setSelectedItemIndex:(NSUInteger)selectedItemIndex {
+    [self setSelectedItemIndex:selectedItemIndex animated:YES notifyDelegate:YES];
+}
+
+- (void)setSelectedItemIndex:(NSUInteger)itemIndex animated:(BOOL)animated notifyDelegate:(BOOL)notifyDelegate{
     _menuBarView.selectedItemIndex = itemIndex;
+    
+    CGFloat desiredX = [_menuBarView getCenterOfItemAtIndex:itemIndex] - (_scrollView.bounds.size.width / 2);
+    
+    if (desiredX < 0)
+        desiredX = 0;
+    
+    if (desiredX > _menuBarView.barLength - _scrollView.bounds.size.width)
+        desiredX = _menuBarView.barLength - _scrollView.bounds.size.width;
+    
+    [_scrollView setContentOffset:CGPointMake(desiredX, 0) animated:animated];
+    
+    if (_menuBarView.delegate && notifyDelegate)
+        [_menuBarView.delegate itemSelectedAtIndex:itemIndex inMenuBar:self];
 }
 
 - (BOOL)bounces {
