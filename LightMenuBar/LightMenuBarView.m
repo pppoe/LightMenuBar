@@ -213,7 +213,7 @@
         
     CGContextRef context = UIGraphicsGetCurrentContext();
     
-    CGContextSetFillColorWithColor(context, [UIColor whiteColor].CGColor);
+    CGContextSetFillColorWithColor(context, self.superview.superview.backgroundColor.CGColor);
     CGContextFillRect(context, rect);
     
     /**< Background */
