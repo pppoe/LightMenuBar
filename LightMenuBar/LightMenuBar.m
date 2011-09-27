@@ -39,7 +39,7 @@
     
     
     if (_scrollView.bounds.size.width > _menuBarView.barLength)
-        desiredX = ((_scrollView.bounds.size.width - _menuBarView.barLength) / -2);
+        desiredX = 0;
     
     [_scrollView setContentOffset:CGPointMake(desiredX, 0) animated:animated];
     
@@ -100,6 +100,15 @@
     _menuBarView.frame = CGRectMake(_menuBarView.frame.origin.x, _menuBarView.frame.origin.y, 
                                     barLength, _menuBarView.frame.size.height);
     _scrollView.contentSize = CGSizeMake(barLength, _scrollView.frame.size.height);
+    
+    if (_scrollView.bounds.size.width > barLength) {
+        CGFloat inset = (_scrollView.bounds.size.width - barLength) / 2;
+        _scrollView.contentInset = UIEdgeInsetsMake(0, inset, 0, inset);
+    }
+    else {
+        _scrollView.contentInset = UIEdgeInsetsZero;
+    }
+    
     [_menuBarView setNeedsDisplay];
     
 }
