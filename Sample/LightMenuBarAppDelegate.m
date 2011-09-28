@@ -27,7 +27,8 @@
     
     menuBar.bounces = YES;
     menuBar.selectedItemIndex = 19;
-    
+
+    menuBar.backgroundColor = [UIColor whiteColor];
     [self.window addSubview:menuBar];
     [self.window makeKeyAndVisible];
     [menuBar release];
