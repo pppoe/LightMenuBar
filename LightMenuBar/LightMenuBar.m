@@ -8,20 +8,52 @@
 
 #import "LightMenuBar.h"
 #import "LightMenuBarView.h"
+#import "LightMenuBarDelegate.h"
 
 @implementation LightMenuBar
 @synthesize menuBarView = _menuBarView;
 @synthesize barStyle = _style;
 @dynamic delegate;
 @dynamic selectedItemIndex;
+@dynamic bounces;
 
 #pragma mark property
 - (NSUInteger)selectedItemIndex {
     return _menuBarView.selectedItemIndex;
 }
 
-- (void)setSelectedItemIndex:(NSUInteger)itemIndex {
+- (void)setSelectedItemIndex:(NSUInteger)selectedItemIndex {
+    [self setSelectedItemIndex:selectedItemIndex animated:YES notifyDelegate:YES];
+}
+
+- (void)setSelectedItemIndex:(NSUInteger)itemIndex animated:(BOOL)animated notifyDelegate:(BOOL)notifyDelegate{
     _menuBarView.selectedItemIndex = itemIndex;
+    
+    [_menuBarView setNeedsDisplay];
+    
+    CGFloat desiredX = [_menuBarView getCenterOfItemAtIndex:itemIndex] - (_scrollView.bounds.size.width / 2);
+    
+    if (desiredX < 0)
+        desiredX = 0;
+    
+    if (desiredX > _menuBarView.barLength - _scrollView.bounds.size.width)
+        desiredX = _menuBarView.barLength - _scrollView.bounds.size.width;
+    
+    
+    if (!_scrollView.bounds.size.width > _menuBarView.barLength) {
+        [_scrollView setContentOffset:CGPointMake(desiredX, 0) animated:animated];
+    }
+    
+    if (_menuBarView.delegate && notifyDelegate)
+        [_menuBarView.delegate itemSelectedAtIndex:itemIndex inMenuBar:self];
+}
+
+- (BOOL)bounces {
+    return _scrollView.bounces;
+}
+
+- (void)setBounces:(BOOL)bounces {
+    _scrollView.bounces = bounces;
 }
 
 - (id<LightMenuBarDelegate>)delegate {
@@ -69,6 +101,15 @@
     _menuBarView.frame = CGRectMake(_menuBarView.frame.origin.x, _menuBarView.frame.origin.y, 
                                     barLength, _menuBarView.frame.size.height);
     _scrollView.contentSize = CGSizeMake(barLength, _scrollView.frame.size.height);
+    
+    if (_scrollView.bounds.size.width > barLength) {
+        CGFloat inset = (_scrollView.bounds.size.width - barLength) / 2;
+        _scrollView.contentInset = UIEdgeInsetsMake(0, inset, 0, inset);
+    }
+    else {
+        _scrollView.contentInset = UIEdgeInsetsZero;
+    }
+    
     [_menuBarView setNeedsDisplay];
     
 }

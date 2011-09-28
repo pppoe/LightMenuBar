@@ -24,6 +24,10 @@
     LightMenuBar *menuBar = [[LightMenuBar alloc] initWithFrame:CGRectMake(0, 20, 320, 40) andStyle:LightMenuBarStyleItem];
 //    LightMenuBar *menuBar = [[LightMenuBar alloc] initWithFrame:CGRectMake(0, 20, 320, 40) andStyle:LightMenuBarStyleButton];
     menuBar.delegate = self;
+    
+    menuBar.bounces = YES;
+    menuBar.selectedItemIndex = 19;
+    
     [self.window addSubview:menuBar];
     [self.window makeKeyAndVisible];
     [menuBar release];
@@ -86,7 +90,7 @@
 
 #pragma mark LightMenuBarDelegate
 - (NSUInteger)itemCountInMenuBar:(LightMenuBar *)menuBar {
-    return 6;
+    return 20;
 }
 
 - (NSString *)itemTitleAtIndex:(NSUInteger)index inMenuBar:(LightMenuBar *)menuBar {

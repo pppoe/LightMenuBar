@@ -213,7 +213,7 @@
         
     CGContextRef context = UIGraphicsGetCurrentContext();
     
-    CGContextSetFillColorWithColor(context, [UIColor whiteColor].CGColor);
+    CGContextSetFillColorWithColor(context, self.superview.superview.backgroundColor.CGColor);
     CGContextFillRect(context, rect);
     
     /**< Background */
@@ -380,6 +380,20 @@
     animation.type = kCATransitionFade;
     [self.layer addAnimation:animation forKey:@"render"];
     [self setNeedsDisplay];    
+}
+
+
+- (CGFloat)getCenterOfItemAtIndex:(NSInteger)index {
+    CGFloat currentX = CGRectGetMinX(bkgrdRect) + backgroundRad;
+    for (int i = 0; i <= index; i++)
+    {
+        float itemWidth = (autoWidth ? averWidth : [self.delegate itemWidthAtIndex:i inMenuBar:self.menuBar]);
+        currentX += itemWidth;
+        
+        if (i == index)
+            currentX = currentX - (itemWidth / 2);
+    }
+    return floorf(currentX);
 }
 
 //- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {

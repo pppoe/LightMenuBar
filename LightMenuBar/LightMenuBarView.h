@@ -52,4 +52,6 @@
 - (void)render;
 - (void)blink;
 
+- (CGFloat)getCenterOfItemAtIndex:(NSInteger)index;
+
 @end

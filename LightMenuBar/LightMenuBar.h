@@ -27,6 +27,11 @@ typedef enum {
 @property (nonatomic, readonly) LightMenuBarView *menuBarView;
 @property (nonatomic, readonly) LightMenuBarStyle barStyle;
 
+@property (nonatomic, assign) BOOL bounces; // defaults to NO
+
+
 - (id)initWithFrame:(CGRect)frame andStyle:(LightMenuBarStyle)barStyle;
+
+- (void)setSelectedItemIndex:(NSUInteger)itemIndex animated:(BOOL)animated notifyDelegate:(BOOL)notifyDelegate;
 
 @end
