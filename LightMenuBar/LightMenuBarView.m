@@ -351,6 +351,7 @@
         else if (self.menuBar.barStyle == LightMenuBarStyleItem)
         {
             self.selectedItemIndex = activeIndex;
+            [_menuBar handleAutoScrolling:YES];
             [self render];
         }
     }

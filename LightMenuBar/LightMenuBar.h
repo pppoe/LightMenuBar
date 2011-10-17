@@ -34,4 +34,6 @@ typedef enum {
 
 - (void)setSelectedItemIndex:(NSUInteger)itemIndex animated:(BOOL)animated notifyDelegate:(BOOL)notifyDelegate;
 
+- (void)handleAutoScrolling:(BOOL)animated;
+
 @end
