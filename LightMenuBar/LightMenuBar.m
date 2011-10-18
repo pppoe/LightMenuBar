@@ -29,9 +29,16 @@
 - (void)setSelectedItemIndex:(NSUInteger)itemIndex animated:(BOOL)animated notifyDelegate:(BOOL)notifyDelegate{
     _menuBarView.selectedItemIndex = itemIndex;
     
+    [self handleAutoScrolling:animated];
+    
+    if (_menuBarView.delegate && notifyDelegate)
+        [_menuBarView.delegate itemSelectedAtIndex:itemIndex inMenuBar:self];
+}
+
+- (void)handleAutoScrolling:(BOOL)animated {
     [_menuBarView setNeedsDisplay];
     
-    CGFloat desiredX = [_menuBarView getCenterOfItemAtIndex:itemIndex] - (_scrollView.bounds.size.width / 2);
+    CGFloat desiredX = [_menuBarView getCenterOfItemAtIndex:_menuBarView.selectedItemIndex] - (_scrollView.bounds.size.width / 2);
     
     if (desiredX < 0)
         desiredX = 0;
@@ -43,9 +50,6 @@
     if (!(_scrollView.bounds.size.width > _menuBarView.barLength)) {
         [_scrollView setContentOffset:CGPointMake(desiredX, 0) animated:animated];
     }
-    
-    if (_menuBarView.delegate && notifyDelegate)
-        [_menuBarView.delegate itemSelectedAtIndex:itemIndex inMenuBar:self];
 }
 
 - (BOOL)bounces {
