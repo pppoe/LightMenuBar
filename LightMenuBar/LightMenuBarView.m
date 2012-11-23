@@ -266,6 +266,19 @@
     /**< Titles */
     {
         float currentX = backgroundRad + CGRectGetMinX(bkgrdRect);
+            
+#if __IPHONE_OS_VERSION_MAX_ALLOWED >= 60000
+            NSLineBreakMode lbm = NSLineBreakByTruncatingTail;
+#else
+            UILineBreakMode lbm = UILineBreakModeTailTruncation;
+#endif
+
+#if __IPHONE_OS_VERSION_MAX_ALLOWED >= 60000
+            NSTextAlignment ta = NSTextAlignmentCenter;
+#else
+            UITextAlignment ta = UITextAlignmentCenter;
+#endif
+
         for (int i = 0; i < itemCount; i++)
         {
             float itemWidth = (autoWidth ? averWidth : [self.delegate itemWidthAtIndex:i inMenuBar:menuBar]);
@@ -274,7 +287,7 @@
                                           itemWidth, bkgrdRect.size.height);
             
             NSString *title =  [self.delegate itemTitleAtIndex:i inMenuBar:menuBar];
-            CGSize titleSize = [title sizeWithFont:titleFont constrainedToSize:titleRect.size lineBreakMode:UILineBreakModeTailTruncation];
+            CGSize titleSize = [title sizeWithFont:titleFont constrainedToSize:titleRect.size lineBreakMode:lbm];
             
             CGContextSetStrokeColorWithColor(context, titleNormalColor.CGColor);
             CGContextSetFillColorWithColor(context, titleNormalColor.CGColor);
@@ -287,8 +300,8 @@
                                          CGRectGetMinY(titleRect) + (titleRect.size.height - titleSize.height)/2.0f, 
                                          titleSize.width, titleSize.height) 
                      withFont:titleFont
-                lineBreakMode:UILineBreakModeTailTruncation
-                    alignment:UITextAlignmentCenter];            
+                lineBreakMode:lbm
+                    alignment:ta];            
             
             currentX += itemWidth;
         }            
